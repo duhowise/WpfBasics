@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfBasics", "WpfBasics\WpfB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTreeView", "WpfTreeView\WpfTreeView.csproj", "{1A8EE994-5937-4271-8618-5E72A14909FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Faseto.Word", "Faseto.Word\Faseto.Word.csproj", "{1AA9EBD6-9974-4C38-86B3-E7C068D14477}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1A8EE994-5937-4271-8618-5E72A14909FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A8EE994-5937-4271-8618-5E72A14909FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A8EE994-5937-4271-8618-5E72A14909FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AA9EBD6-9974-4C38-86B3-E7C068D14477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AA9EBD6-9974-4C38-86B3-E7C068D14477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AA9EBD6-9974-4C38-86B3-E7C068D14477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AA9EBD6-9974-4C38-86B3-E7C068D14477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
