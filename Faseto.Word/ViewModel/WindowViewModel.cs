@@ -1,46 +1,43 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Faseto.Word.ViewModel.Base;
 using Faseto.Word.Window;
-using Point = System.Windows.Point;
 
 namespace Faseto.Word.ViewModel
 {
     /// <summary>
-    /// View Model for the custom flat window
+    /// The View Model for the custom flat window
     /// </summary>
     public class WindowViewModel : BaseViewModel
     {
-        #region PrivateMember
+        #region Private Member
 
         /// <summary>
-        /// The window the  viewModel controls
+        /// The window this view model controls
         /// </summary>
-        private System.Windows.Window _window;
+        private System.Windows.Window mWindow;
 
         /// <summary>
-        /// the margin around the window to allow for a drop shadow
+        /// The margin around the window to allow for a drop shadow
         /// </summary>
-        private int _outerMarginSize = 10;
+        private int mOuterMarginSize = 10;
 
         /// <summary>
         /// The radius of the edges of the window
         /// </summary>
-        private int _windowRadius = 10;
+        private int mWindowRadius = 10;
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// Gives the width height of the window
+        /// The smallest width the window can go to
         /// </summary>
         public double WindowMinimumWidth { get; set; } = 400;
 
         /// <summary>
-        /// Gives the minimum height of the window
+        /// The smallest height the window can go to
         /// </summary>
         public double WindowMinimumHeight { get; set; } = 400;
 
@@ -49,101 +46,122 @@ namespace Faseto.Word.ViewModel
         /// </summary>
         public int ResizeBorder { get; set; } = 6;
 
-        public int InnerContentPadding { get; set; } = 10;
-
-
         /// <summary>
-        /// The Height of the Title Bar / Caption Height of the Window
+        /// The size of the resize border around the window, taking into account the outer margin
         /// </summary>
-        public int TitleHeight { get; set; } = 42;
+        public Thickness ResizeBorderThickness { get { return new Thickness(ResizeBorder + OuterMarginSize); } }
 
         /// <summary>
-        /// Set's the outer margin based on  window state
+        /// The padding of the inner content of the main window
+        /// </summary>
+        public Thickness InnerContentPadding { get { return new Thickness(ResizeBorder); } }
+
+        /// <summary>
+        /// The margin around the window to allow for a drop shadow
         /// </summary>
         public int OuterMarginSize
         {
-            get => _window.WindowState == WindowState.Maximized ? 0 : _outerMarginSize;
-            set => _outerMarginSize = value;
+            get
+            {
+                return mWindow.WindowState == WindowState.Maximized ? 0 : mOuterMarginSize;
+            }
+            set
+            {
+                mOuterMarginSize = value;
+            }
         }
 
         /// <summary>
-        ///  Set's the window radius based on  window state
+        /// The margin around the window to allow for a drop shadow
+        /// </summary>
+        public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
+
+        /// <summary>
+        /// The radius of the edges of the window
         /// </summary>
         public int WindowRadius
         {
-            get => _window.WindowState == WindowState.Maximized ? 0 : _windowRadius;
-            set => _windowRadius = value;
+            get
+            {
+                return mWindow.WindowState == WindowState.Maximized ? 0 : mWindowRadius;
+            }
+            set
+            {
+                mWindowRadius = value;
+            }
         }
 
         /// <summary>
-        /// The size of the resize border around the windows
+        /// The radius of the edges of the window
         /// </summary>
-        public Thickness InnerContentPaddingThickness => new Thickness(InnerContentPadding);
+        public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
 
-
-        public Thickness ResizeBorderThickness => new Thickness(ResizeBorder + OuterMarginSize);
-
-        public Thickness OuterMarginThickness => new Thickness(OuterMarginSize);
-        public CornerRadius WindowCornerRadius => new CornerRadius(WindowRadius);
-        public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
+        /// <summary>
+        /// The height of the title bar / caption of the window
+        /// </summary>
+        public int TitleHeight { get; set; } = 42;
+        /// <summary>
+        /// The height of the title bar / caption of the window
+        /// </summary>
+        public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
         #endregion
-
 
         #region Commands
 
         /// <summary>
-        /// Command to minimize the window
+        /// The command to minimize the window
         /// </summary>
         public ICommand MinimizeCommand { get; set; }
 
         /// <summary>
-        /// Command to Maximize the window
+        /// The command to maximize the window
         /// </summary>
         public ICommand MaximizeCommand { get; set; }
 
         /// <summary>
-        /// Command to show the system menu 
-        /// </summary>
-        public ICommand MenuCommand { get; set; }
-
-        /// <summary>
-        /// Command to close the window
+        /// The command to close the window
         /// </summary>
         public ICommand CloseCommand { get; set; }
+
+        /// <summary>
+        /// The command to show the system menu of the window
+        /// </summary>
+        public ICommand MenuCommand { get; set; }
 
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Default Constructor
+        /// Default constructor
         /// </summary>
         public WindowViewModel(System.Windows.Window window)
         {
-            _window = window;
-            _window.StateChanged += _window_StateChanged;
+            mWindow = window;
 
-            //create commands
-            MinimizeCommand = new RelayCommand(() => _window.WindowState = WindowState.Minimized);
-            MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
-            CloseCommand = new RelayCommand(() => _window.Close());
-            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
-            var windowResizer = new WindowResizer(_window);
-        }
+            // Listen out for the window resizing
+            mWindow.StateChanged += (sender, e) =>
+            {
+                // Fire off events for all properties that are affected by a resize
+                OnPropertyChanged(nameof(ResizeBorderThickness));
+                OnPropertyChanged(nameof(OuterMarginSize));
+                OnPropertyChanged(nameof(OuterMarginSizeThickness));
+                OnPropertyChanged(nameof(WindowRadius));
+                OnPropertyChanged(nameof(WindowCornerRadius));
+            };
 
-        private void _window_StateChanged(object sender, System.EventArgs e)
-        {
-            //fire off event for all properties for when window resizes
-            OnPropertyChanged(nameof(ResizeBorderThickness));
-            OnPropertyChanged(nameof(OuterMarginSize));
-            OnPropertyChanged(nameof(OuterMarginThickness));
-            OnPropertyChanged(nameof(WindowRadius));
-            OnPropertyChanged(nameof(WindowCornerRadius));
+            // Create commands
+            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+            CloseCommand = new RelayCommand(() => mWindow.Close());
+            MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
+
+            // Fix window resize issue
+            var resizer = new WindowResizer(mWindow);
         }
 
         #endregion
-
 
         #region Private Helpers
 
@@ -151,10 +169,13 @@ namespace Faseto.Word.ViewModel
         /// Gets the current mouse position on the screen
         /// </summary>
         /// <returns></returns>
-        public Point GetMousePosition()
+        private Point GetMousePosition()
         {
-            var position = Mouse.GetPosition(_window);
-            return new Point(position.X + _window.Left, position.Y + _window.Top);
+            // Position of the mouse relative to the window
+            var position = Mouse.GetPosition(mWindow);
+
+            // Add the window position so its a "ToScreen"
+            return new Point(position.X + mWindow.Left, position.Y + mWindow.Top);
         }
 
         #endregion

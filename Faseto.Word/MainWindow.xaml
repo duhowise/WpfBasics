@@ -4,18 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Faseto.Word"
-        mc:Ignorable="d" Name="AppWindow" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        x:Name="AppWindow"
         Icon="Images/Logo/logo-small.png"
-        MinHeight="{Binding WindowMinimumHeight,FallbackValue=400}"
-        MinWidth="{Binding WindowMinimumWidth,FallbackValue=400}"
-        WindowStyle="None" AllowsTransparency="True"
-        Title="Welcome Friend!" Height="600" Width="900">
+        MinWidth="{Binding WindowMinimumWidth}"
+        MinHeight="{Binding WindowMinimumHeight}"
+        Title="Welcome, friend!" Height="600" Width="900">
+
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <!-- Outer border with the drops hadow margin -->
+                        <!-- Outer border with the dropshadow margin -->
                         <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
 
                             <!-- Main window outline -->
@@ -26,7 +30,7 @@
                                         Background="{StaticResource BackgroundLightBrush}"
                                         CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}" />
 
-                                <!-- Window border and drop shadown -->
+                                <!-- Window border and dropshadown -->
                                 <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
                                     Background="{Binding ForegroundLightBrush, FallbackValue=White}">
                                     <Border.Effect>
@@ -120,14 +124,17 @@
             </Setter>
         </Style>
     </Window.Resources>
+
     <WindowChrome.WindowChrome>
-        <WindowChrome GlassFrameThickness="0" ResizeBorderThickness="{Binding ResizeBorderThickness}"
-                      CornerRadius="0" CaptionHeight="{Binding TitleHeight}">
-
-        </WindowChrome>
+        <WindowChrome
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="0"
+            GlassFrameThickness="0"
+            />
     </WindowChrome.WindowChrome>
-
 
     <Grid Background="{StaticResource ForegroundLightBrush}">
     </Grid>
+
 </Window>

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using WpfTreeView.Directory;
 using WpfTreeView.Directory.Data;
 
 namespace WpfTreeView
