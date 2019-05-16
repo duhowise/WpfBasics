@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Faseto.Word"
+        xmlns:valueConverters="clr-namespace:Faseto.Word.ValueConverters"
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -32,7 +33,7 @@
 
                                 <!-- Window border and dropshadown -->
                                 <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
-                                    Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                        Background="{Binding ForegroundLightBrush, FallbackValue=White}">
                                     <Border.Effect>
                                         <DropShadowEffect ShadowDepth="0" Opacity="0.2" />
                                     </Border.Effect>
@@ -50,8 +51,6 @@
 
                                         <!-- Title Bar -->
                                         <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=42}" />
-                                        <!-- Drop shadow -->
-                                        <RowDefinition Height="Auto" />
                                         <!-- Window Content -->
                                         <RowDefinition Height="*" />
 
@@ -71,48 +70,46 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Icon -->
-                                        <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
+                                        <Button Style="{StaticResource SystemIconButton}"
+                                                Command="{Binding MenuCommand}">
                                             <Image Source="/Images/Logo/logo-small.png" />
                                         </Button>
 
                                         <!-- Title -->
-                                        <Viewbox Grid.Column="1" Margin="0">
-                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Welcome, friend!'}" />
+                                        <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
+                                            <StackPanel>
+                                                <TextBlock FontSize="{StaticResource FontsizeRegular}"
+                                                           Margin="0 0 0 -5" FontFamily="{StaticResource LatoBold}">
+                                                    <Run Text="W" Foreground="{StaticResource WordOrangeBrush}"></Run>
+                                                    <Run Text="O" Foreground="{StaticResource WordBlueBrush}"></Run>
+                                                    <Run Text="R" Foreground="{StaticResource WordRedBrush}"></Run>
+                                                    <Run Text="D" Foreground="{StaticResource WordGreenBrush}"></Run>
+                                                </TextBlock>
+                                                <TextBlock Text="by faseto" TextAlignment="Center"></TextBlock>
+                                            </StackPanel>
                                         </Viewbox>
 
                                         <!-- Window Buttons -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <Button Command="{Binding MinimizeCommand}" Style="{StaticResource WindowControlButton}" Content="_" />
-                                            <Button Command="{Binding MaximizeCommand}" Style="{StaticResource WindowControlButton}" Content="[ ]" />
-                                            <Button Command="{Binding CloseCommand}" Style="{StaticResource WindowClosedButton}" Content="X" />
+                                            <Button Command="{Binding MinimizeCommand}"
+                                                    Style="{StaticResource WindowControlButton}" Content="_" />
+                                            <Button Command="{Binding MaximizeCommand}"
+                                                    Style="{StaticResource WindowControlButton}" Content="[ ]" />
+                                            <Button Command="{Binding CloseCommand}"
+                                                    Style="{StaticResource WindowClosedButton}" Content="X" />
                                         </StackPanel>
 
                                     </Grid>
 
-                                    <!-- Drop shadow -->
-                                    <Border Grid.Row="1" Height="6" BorderThickness="0 0.2 0 0">
-                                        <!-- Underline -->
-                                        <Border.BorderBrush>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1, 0">
-                                                <GradientStop Color="{StaticResource ForegroundLight}" Offset="0.0" />
-                                                <GradientStop Color="{StaticResource ForegroundMain}" Offset="0.5" />
-                                                <GradientStop Color="{StaticResource ForegroundLight}" Offset="1.0" />
-                                            </LinearGradientBrush>
-                                        </Border.BorderBrush>
-
-                                        <!-- Drop shadow -->
-                                        <Border.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0, 1">
-                                                <GradientStop Color="{StaticResource BackgroundVeryLight}" Offset="0.0" />
-                                                <GradientStop Color="{StaticResource ForegroundLight}" Offset="1.0" />
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-
-                                    </Border>
-
                                     <!-- Page Content -->
-                                    <Border Grid.Row="2" Padding="{Binding InnerContentPadding}">
-                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}" >
+                                       <!--<Border>
+                                           <Border.Background>
+                                               <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="Images/Backgrounds/emoji-background.png"></ImageBrush>
+                                           </Border.Background>
+                                        </Border>-->
+                                       <ContentPresenter Content="{TemplateBinding Content}" />
+
                                     </Border>
 
                                 </Grid>
@@ -130,11 +127,13 @@
             ResizeBorderThickness="{Binding ResizeBorderThickness}"
             CaptionHeight="{Binding TitleHeight}"
             CornerRadius="0"
-            GlassFrameThickness="0"
-            />
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
     <Grid Background="{StaticResource ForegroundLightBrush}">
+        <Frame Name="MainFrame"
+               Content="{Binding CurrentPage, Converter={valueConverters:ApplicationPageValueConverter}}">
+        </Frame>
     </Grid>
 
 </Window>

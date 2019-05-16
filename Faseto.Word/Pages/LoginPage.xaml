@@ -1,13 +1,53 @@
 ﻿<Page x:Class="Faseto.Word.Pages.LoginPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
+    
 
-    <Grid>
-        <Button Content="Hello"></Button>
-    </Grid>
+    <Border Background="{StaticResource WordBlueBrush}">
+        <Grid>
+            <!--blue background Image-->
+            <Grid.Background>
+                <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500"
+                            ImageSource="../Images/Backgrounds/emoji-background.png">
+                </ImageBrush>
+            </Grid.Background>
+            <!--main content scroll-->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                            TextBlock.TextAlignment="Center">
+                    <!--login main content white box-->
+                    <Border Background="{StaticResource ForegroundLightBrush}" CornerRadius="10" Padding="15 50 15 15"
+                            Margin="50 50 50 0" Width="330">
+                        <StackPanel>
+                            <!--signup header-->
+                            <TextBlock Text="Sign Up" FontSize="{StaticResource FontsizeLarge}"
+                                       FontFamily="{StaticResource LatoRegular}"
+                                       Foreground="{StaticResource WordBlueBrush}">
+                            </TextBlock>
+                            <!--sign up subtext-->
+                            <TextBlock Text="It's about to get fun" FontSize="{StaticResource FontsizeRegular}"
+                                       FontFamily="{StaticResource LatoRegular}" Margin="0 0 0 30"
+                                       Foreground="{StaticResource ForegroundDarkBrush}">
+                            </TextBlock>
+                            <!--email-->
+                            <TextBox Tag="Email" Style="{StaticResource TextBoxPlaceholder}" ></TextBox>
+                            <!--password-->
+                            <TextBox Tag="Password" Style="{StaticResource TextBoxPlaceholder}" Margin="0 0 0 40"></TextBox>
+                            <!--next button-->
+                            <Button Content="next" HorizontalAlignment="Center" ></Button>
+
+
+                        </StackPanel>
+
+                    </Border>
+                    <Button Style="{StaticResource TextButton}" Content="I already have an account" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </Page>

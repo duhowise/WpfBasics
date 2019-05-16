@@ -8,7 +8,7 @@
         <ResourceDictionary Source="Fonts.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-<!--hoverless Button-->
+    <!--hoverless Button-->
     <Style x:Key="Hoverless" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
@@ -24,49 +24,131 @@
     </Style>
 
 
-<!--system icon button-->
-<Style TargetType="{x:Type Button}" BasedOn="{StaticResource Hoverless}" x:Key="SystemIconButton">
+    <!--system icon button-->
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource Hoverless}" x:Key="SystemIconButton">
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"></Setter>
-    <Setter Property="Padding" Value="10"></Setter>
-</Style>
+        <Setter Property="Padding" Value="10"></Setter>
+    </Style>
 
-<!--Window Control Button-->
-<Style TargetType="{x:Type Button}" x:Key="WindowControlButton" BasedOn="{StaticResource BaseStyle}">
-    <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"></Setter>
-    <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="Padding" Value="10"/>
-    <Setter Property="VerticalAlignment" Value="Stretch"/>
-    <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"></Setter>
-    <Setter Property="LayoutTransform" >
-        <Setter.Value>
-            <ScaleTransform  ScaleX="1.5"></ScaleTransform>
-        </Setter.Value>
-    </Setter>
-    <Setter Property="Template">
-        <Setter.Value>
-            <ControlTemplate TargetType="{x:Type Button}">
-                <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{TemplateBinding Content}"/>
-                </Border>
-            </ControlTemplate>
-        </Setter.Value>
-    </Setter>
-    <Style.Triggers>
-        <Trigger Property="IsMouseOver" Value="True">
-            <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"></Setter>
-        </Trigger>
-    </Style.Triggers>
+    <!--Window Control Button-->
+    <Style TargetType="{x:Type Button}" x:Key="WindowControlButton" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"></Setter>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"></Setter>
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1.5"></ScaleTransform>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundLightBrush}"></Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 
-<!--window close button-->
-<Style TargetType="{x:Type Button}" x:Key="WindowClosedButton" BasedOn="{StaticResource WindowControlButton}">
-    <Style.Triggers>
-        <Trigger Property="IsMouseOver" Value="True"  >
-            <Setter Property="Background" Value="Red"></Setter>
-            <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}"/>
-        </Trigger>
-    </Style.Triggers>
-</Style>
+    <!--window close button-->
+    <Style TargetType="{x:Type Button}" x:Key="WindowClosedButton" BasedOn="{StaticResource WindowControlButton}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Red"></Setter>
+                <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Regular button-->
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Background" Value="{StaticResource WordOrangeBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontsizeLarge}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="Padding" Value="50 10" />
+        <Setter Property="Margin" Value="0 10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="10"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <TextBlock x:Name="contentPresenter"
+                                   Text="{TemplateBinding Content}"
+                                   Focusable="False"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   Margin="{TemplateBinding Padding}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontFamily="{TemplateBinding FontFamily}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource WordBlueBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource ForegroundDarkBrush}" />
+                            <Setter Property="Foreground" Value="#FF838383" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+ 
+    
+    
+    
+    <!--Regular button-->
+
+    <Style TargetType="{x:Type Button}" x:Key="TextButton" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundLightBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontsizeRegular}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="Padding" Value="50 10" />
+        <Setter Property="Margin" Value="0 10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="border"  BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="10"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <TextBlock x:Name="contentPresenter"
+                                   Text="{TemplateBinding Content}"
+                                   Focusable="False"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   Margin="{TemplateBinding Padding}"
+                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontFamily="{TemplateBinding FontFamily}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground"  Value="{StaticResource WordOrangeBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{StaticResource ForegroundDarkBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
 </ResourceDictionary>

@@ -1,8 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Faseto.Word">
+                    xmlns:local="clr-namespace:Faseto.Word"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <FontFamily x:Key="LatoRegular">pack://aplication;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoBold">pack://aplication;,,,/Fonts/#Lato Bold</FontFamily>
     <FontFamily x:Key="LatoThin">pack://aplication;,,,/Fonts/#Lato Thin</FontFamily>
+   
+    
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoThin}"></Setter>
     </Style>
@@ -19,4 +23,9 @@
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}"></Style>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}"></Style>
     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}"></Style>
+
+
+    <system:Double x:Key="FontsizeRegular" >20</system:Double>
+    <system:Double x:Key="FontsizeSmall" >14</system:Double>
+    <system:Double x:Key="FontsizeLarge" >30</system:Double>
 </ResourceDictionary>

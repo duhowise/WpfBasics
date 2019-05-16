@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using Faseto.Word.ViewModel;
 
 namespace Faseto.Word.Window
 {
@@ -16,7 +17,10 @@ namespace Faseto.Word.Window
         /// The window to handle the resizing for
         /// </summary>
         private System.Windows.Window mWindow;
-
+        /// <summary>
+        /// The last calculated available screen size
+        /// </summary>
+        private Rect mScreenSize = new Rect();
         #endregion
 
         #region Dll Imports
@@ -30,6 +34,47 @@ namespace Faseto.Word.Window
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
+
+        #endregion
+
+        #region Public Events
+
+        /// <summary>
+        /// Called when the window dock position changes
+        /// </summary>
+        public event Action<WindowDockPosition> WindowDockChanged = (dock) => { };
+
+        /// <summary>
+        /// Called when the window starts being moved/dragged
+        /// </summary>
+        public event Action WindowStartedMove = () => { };
+
+        /// <summary>
+        /// Called when the window has been moved/dragged and then finished
+        /// </summary>
+        public event Action WindowFinishedMove = () => { };
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The size and position of the current monitor the window is on
+        /// </summary>
+        public Rectangle CurrentMonitorSize { get; set; } = new Rectangle();
+
+        /// <summary>
+        /// The margin around the window for the current window to compensate for any non-usable area
+        /// such as the task bar
+        /// </summary>
+        public Thickness CurrentMonitorMargin { get; private set; } = new Thickness();
+
+        /// <summary>
+        /// The size and position of the current screen in relation to the multi-screen desktop
+        /// For example a second monitor on the right will have a Left position of
+        /// the X resolution of the screens on the left
+        /// </summary>
+        public Rect CurrentScreenSize => mScreenSize;
 
         #endregion
 
